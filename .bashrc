@@ -133,5 +133,32 @@ eval "$(oh-my-posh --config '/home/aranorn/posh/catppuccin_mocha.omp.json' init 
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-# aliases to run odoo
-alias odoo16="tmux new-session -d -s odoo16 'bash /home/aranorn/odoo-16-start.sh'"
+. /home/aranorn/my-paths.conf
+# start my main session
+tmux_aranorn() {
+    session_name="aranorn"
+    if tmux has-session -t "$session_name" 2>/dev/null; then
+        # Session exists, attach to it
+        tmux attach-session -t "$session_name"
+    else
+        # Session doesn't exist, create it
+        # and run odoo16 window and panes below
+        tmux new-session -d -s "$session_name" -n odoo16 \; \
+            send-keys 'cd $odoo_16_wd && nvim .' C-m \; \
+            split-window -h -p 5 \;\
+            send-keys 'cd $odoo_16_wd' C-m \; \
+            split-window -v -p 95 \;\
+            send-keys 'bash /home/aranorn/odoo-16-start.sh' C-m \;
+        tmux attach-session -t "$session_name"
+    fi
+}
+
+# restart odoo 16 instance inside tmux session > window > pane above
+odoo16_restart(){
+    tmux send-keys -t aranorn:0.2 C-c
+    tmux send-keys -t aranorn:0.2 "bash /home/aranorn/odoo-16-start.sh" C-m
+}
+# aliases to run my session
+ alias tx="tmux_aranorn"
+ alias osr="odoo16_restart"
+# create alias to restart odoo 16 instance inside the tmux session>window>pane
