@@ -28,7 +28,6 @@
 dev/
 get-docker.sh
 my-paths.conf
-posh/
 wkhtmltox_0.12.5-1.bionic_amd64.deb
 wkhtmltox_0.12.6.1-2.jammy_amd64.deb
 .config/ookla/
