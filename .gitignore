@@ -31,3 +31,16 @@ my-paths.conf
 posh/
 wkhtmltox_0.12.5-1.bionic_amd64.deb
 wkhtmltox_0.12.6.1-2.jammy_amd64.deb
+.config/ookla/
+.config/systemd/
+.inputrc
+.node_repl_history
+.quokka/
+.zcompdump
+.zsh_history
+.zshrc
+TEST
+apps/
+eco_service_zip/
+nvim-linux64.tar.gz
+vbg
