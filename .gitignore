@@ -43,3 +43,4 @@ apps/
 eco_service_zip/
 nvim-linux64.tar.gz
 vbg
+.tmux/
