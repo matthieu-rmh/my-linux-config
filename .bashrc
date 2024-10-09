@@ -133,6 +133,12 @@ eval "$(oh-my-posh --config '/home/aranorn/posh/catppuccin_mocha.omp.json' init 
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
+# Override mkdir command to cd into it right after directory creation
+function mkdir
+{
+    command mkdir $1 && cd $1
+}
+
 . /home/aranorn/my-paths.conf
 # start my main session
 tmux_odoo_16() {
@@ -159,7 +165,17 @@ tmux_nvim_conf(){
     if tmux has-session -t "$session_name" 2>/dev/null; then
         tmux attach-session -t "$session_name"
     else
-        tmux new-session -s nv_conf "cd ~/.config/nvim && nvim ."
+        tmux new-session -s "$session_name" "cd ~/.config/nvim && nvim ."
+    fi
+}
+
+# my current workspace tmux session
+tmux_cws(){
+    session_name="cws"
+    if tmux has-session -t "$session_name" 2>/dev/null; then
+        tmux attach-session -t "$session_name"
+    else
+        tmux new-session -s "$session_name" "cd $my_cwsd && nvim ."
     fi
 }
 
@@ -169,8 +185,10 @@ odoo16_restart(){
     fuser -k "$odoo_16_port"/tcp
     tmux send-keys -t odoo_16:0.2 "bash /home/aranorn/odoo-16-start.sh" C-m
 }
+
 # aliases to run my session
  alias o16="tmux_odoo_16"
  alias osr="odoo16_restart"
  alias nv_conf="tmux_nvim_conf"
+ alias cws="tmux_cws"
 # create alias to restart odoo 16 instance inside the tmux session>window>pane
