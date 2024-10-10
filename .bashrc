@@ -160,6 +160,25 @@ tmux_odoo_16() {
     fi
 }
 
+tmux_odoo_17() {
+    session_name="odoo_17"
+    if tmux has-session -t "$session_name" 2>/dev/null; then
+        # Session exists, attach to it
+        tmux attach-session -t "$session_name"
+    else
+        # Session doesn't exist, create it
+        # and run odoo16 window and panes below
+        fuser -k "$odoo_17_port"/tcp
+        tmux new-session -d -s "$session_name" -n odoo17 \; \
+            send-keys 'cd $odoo_17_wd && nvim .' C-m \; \
+            split-window -h -p 5 \;\
+            send-keys 'cd $odoo_17_wd' C-m \; \
+            split-window -v -p 95 \;\
+            send-keys 'bash /home/aranorn/odoo-17-start.sh' C-m \;
+        tmux attach-session -t "$session_name"
+    fi
+}
+
 tmux_nvim_conf(){
     session_name="nv_conf"
     if tmux has-session -t "$session_name" 2>/dev/null; then
@@ -186,9 +205,18 @@ odoo16_restart(){
     tmux send-keys -t odoo_16:0.2 "bash /home/aranorn/odoo-16-start.sh" C-m
 }
 
+# restart odoo 16 instance inside tmux session > window > pane above
+odoo17_restart(){
+    tmux send-keys -t odoo_17:0.2 C-c
+    fuser -k "$odoo_17_port"/tcp
+    tmux send-keys -t odoo_17:0.2 "bash /home/aranorn/odoo-17-start.sh" C-m
+}
+
 # aliases to run my session
  alias o16="tmux_odoo_16"
+ alias o17="tmux_odoo_17"
  alias osr="odoo16_restart"
+ alias o17r="odoo17_restart"
  alias nv_conf="tmux_nvim_conf"
  alias cws="tmux_cws"
 # create alias to restart odoo 16 instance inside the tmux session>window>pane
