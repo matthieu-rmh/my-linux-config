@@ -194,7 +194,14 @@ tmux_cws(){
     if tmux has-session -t "$session_name" 2>/dev/null; then
         tmux attach-session -t "$session_name"
     else
-        tmux new-session -s "$session_name" "cd $my_cwsd && nvim ."
+
+        tmux new-session -d -s "$session_name" -n $session_name \; \
+            send-keys 'cd $my_cwsd && nvim .' C-m \; \
+            split-window -h -p 5 \;\
+            send-keys 'cd $my_cwsd' C-m \; \
+            split-window -v -p 95 \;
+        tmux attach-session -t "$session_name"
+
     fi
 }
 
