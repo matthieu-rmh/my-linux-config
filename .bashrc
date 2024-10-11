@@ -194,12 +194,12 @@ tmux_cws(){
     if tmux has-session -t "$session_name" 2>/dev/null; then
         tmux attach-session -t "$session_name"
     else
-
-        tmux new-session -d -s "$session_name" -n $session_name \; \
+        tmux new-session -d -s "$session_name" -n "$session_name" \; \
             send-keys 'cd $my_cwsd && nvim .' C-m \; \
-            split-window -h -p 5 \;\
+            split-window -h -p 15 \;\
             send-keys 'cd $my_cwsd' C-m \; \
-            split-window -v -p 95 \;
+            split-window -v -p 85 \; \
+            send-keys 'cd $my_cwsd' C-m \; 
         tmux attach-session -t "$session_name"
 
     fi
@@ -219,6 +219,16 @@ odoo17_restart(){
     tmux send-keys -t odoo_17:0.2 "bash /home/aranorn/odoo-17-start.sh" C-m
 }
 
+# open alacritty conf session
+tmux_alacritty(){
+    session_name="alacritty"
+    if tmux has-session -t "$session_name" 2>/dev/null; then
+        tmux attach-session -t "$session_name"
+    else
+        tmux new-session -s "$session_name" "nvim $alacritty_path"
+    fi
+}
+
 # aliases to run my session
  alias o16="tmux_odoo_16"
  alias o17="tmux_odoo_17"
@@ -226,4 +236,7 @@ odoo17_restart(){
  alias o17r="odoo17_restart"
  alias nv_conf="tmux_nvim_conf"
  alias cws="tmux_cws"
+ alias alac="tmux_alacritty"
+ 
+# set -o vi 
 # create alias to restart odoo 16 instance inside the tmux session>window>pane
