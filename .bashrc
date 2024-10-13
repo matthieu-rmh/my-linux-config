@@ -128,7 +128,7 @@ case ":$PATH:" in
 esac
 # pnpm end
 export PATH="/home/aranorn/.local/bin:$PATH"
-eval "$(oh-my-posh --config '/home/aranorn/posh/catppuccin_mocha.omp.json' init bash)"
+eval "$(oh-my-posh --config '/home/aranorn/posh/huvix.omp.json' init bash)"
 
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
