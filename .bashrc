@@ -238,5 +238,6 @@ tmux_alacritty(){
  alias cws="tmux_cws"
  alias alac="tmux_alacritty"
  
-# set -o vi 
+set -o vi 
+export SIMPLE_VAR=htttttttp
 # create alias to restart odoo 16 instance inside the tmux session>window>pane

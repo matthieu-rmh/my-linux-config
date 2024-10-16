@@ -1,6 +1,6 @@
 #!/bin/bash
 . /home/aranorn/my-paths.conf
-# current_worked_module=confidentiality_agreement
+current_worked_module=capvi_catalog
 
 if [ -n "$current_worked_module" ]
 then
