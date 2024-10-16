@@ -219,6 +219,16 @@ odoo17_restart(){
     tmux send-keys -t odoo_17:0.2 "bash /home/aranorn/odoo-17-start.sh" C-m
 }
 
+# bash / home tmux session
+b_home(){
+    session_name="b_home"
+    if tmux has-session -t "$session_name" 2>/dev/null; then
+        tmux attach-session -t "$session_name"
+    else
+        tmux new-session -s "$session_name" "cd ~ && nvim ." \; 
+    fi
+}
+
 # open alacritty conf session
 tmux_alacritty(){
     session_name="alacritty"
@@ -237,7 +247,8 @@ tmux_alacritty(){
  alias nv_conf="tmux_nvim_conf"
  alias cws="tmux_cws"
  alias alac="tmux_alacritty"
- 
+ alias bhome="b_home"
+
 set -o vi 
 export SIMPLE_VAR=htttttttp
 # create alias to restart odoo 16 instance inside the tmux session>window>pane
