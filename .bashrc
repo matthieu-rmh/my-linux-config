@@ -250,5 +250,7 @@ tmux_alacritty(){
  alias bhome="b_home"
 
 set -o vi 
+bind -m vi-command 'Control-l: clear-screen'
+bind -m vi-insert 'Control-l: clear-screen'
 export SIMPLE_VAR=htttttttp
 # create alias to restart odoo 16 instance inside the tmux session>window>pane
